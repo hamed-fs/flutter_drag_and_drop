@@ -37,9 +37,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget placeHolder = SampleShape(color: Colors.grey);
 
-  Widget dataWidget = SampleShape(color: Colors.green.withOpacity(0.5));
+  Widget dataGreenWidget = SampleShape(color: Colors.green.withOpacity(0.5));
+  Widget greenWidget = SampleShape(color: Colors.green);
 
-  Widget baseWidget = SampleShape(color: Colors.green);
+  Widget dataRedWidget = SampleShape(color: Colors.red.withOpacity(0.5));
+  Widget redWidget = SampleShape(color: Colors.red);
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +53,28 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Draggable<Widget>(
-              data: dataWidget,
-              child: baseWidget,
-              childWhenDragging: placeHolder,
-              feedback: dataWidget,
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Draggable<Widget>(
+                  data: greenWidget,
+                  child: greenWidget,
+                  childWhenDragging: placeHolder,
+                  feedback: dataGreenWidget,
+                ),
+                Draggable<Widget>(
+                  data: redWidget,
+                  child: redWidget,
+                  childWhenDragging: placeHolder,
+                  feedback: dataRedWidget,
+                ),
+              ],
             ),
             DragTarget<Widget>(
               onWillAccept: (Widget data) => true,
-              onAccept: (data) {
-                child = baseWidget;
+              onAccept: (Widget data) {
+                child = data;
                 setState(() {});
               },
               builder: (context, candidateData, rejectedData) => child,
